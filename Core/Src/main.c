@@ -25,6 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 #include "MPU6050.h"
 /* USER CODE END Includes */
 
@@ -42,7 +43,7 @@ int _write(int file, uint8_t* p, int len)
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define BIND_PULSE_COUNT 7
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -112,6 +113,14 @@ int main(void)
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
 
   MPU6050_Initialization();
+
+  for(int i = 0; i < BIND_PULSE_COUNT; i++)
+  {
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+	  HAL_Delay(5);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+	  HAL_Delay(5);
+  }
 
   /* USER CODE END 2 */
 
