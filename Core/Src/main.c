@@ -102,9 +102,17 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  TIM1->CCR1 = 500;
+  for(int i = 0; i < BIND_PULSE_COUNT; i++)
+  {
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+	  HAL_Delay(5);
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+	  HAL_Delay(5);
+  }
+
+  TIM1->CCR1 = 250;
   TIM1->CCR2 = 500;
-  TIM1->CCR3 = 500;
+  TIM1->CCR3 = 750;
   TIM1->CCR4 = 500;
 
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
@@ -114,13 +122,6 @@ int main(void)
 
   MPU6050_Initialization();
 
-  for(int i = 0; i < BIND_PULSE_COUNT; i++)
-  {
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
-	  HAL_Delay(5);
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
-	  HAL_Delay(5);
-  }
 
   /* USER CODE END 2 */
 
